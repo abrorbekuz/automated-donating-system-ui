@@ -1,6 +1,6 @@
 import React from 'react'
+import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 
 export function HomeFooter() {
   const { t } = useTranslation()

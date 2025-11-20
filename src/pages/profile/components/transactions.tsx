@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
+
+import { Link } from '@tanstack/react-router'
 import { useQuery } from '@apollo/client'
-import { NavLink } from 'react-router-dom'
 import { Badge } from 'src/components/ui/badge'
 import { Button } from 'src/components/ui/button'
 import { DotIcon, Loader2Icon } from 'lucide-react'
@@ -16,9 +17,9 @@ const EmptyState = () => (
     <div className="flex flex-col items-center gap-1 py-8 text-center">
       <h3 className="text-lg font-bold tracking-tight md:text-2xl">You have no transactions yet.</h3>
       <p className="text-sm text-muted-foreground">You can start seeing your transaction as soon as they made.</p>
-      <NavLink to="/home">
+      <Link to="/home">
         <Button className="mt-4">Buy something nice</Button>
-      </NavLink>
+      </Link>
     </div>
   </div>
 )

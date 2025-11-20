@@ -1,17 +1,18 @@
-import { ChevronLeftIcon } from 'lucide-react'
 import { useState } from 'react'
+import { ChevronLeftIcon } from 'lucide-react'
 import { Helmet } from 'react-helmet'
 import { useTranslation } from 'react-i18next'
-import { Link, useParams } from 'react-router-dom'
+
 import { ChipGroup, ChipItem } from 'src/components/Chips'
 import { ServiceItems } from 'src/components/home/serviceItems'
 import { SearchBar } from 'src/components/searchbar'
 import { useServiceMain } from 'src/hooks/useServiceMain'
+import { Link, useParams } from '@tanstack/react-router'
 
 export default function Category() {
   const { t } = useTranslation('translation')
 
-  const { name } = useParams<{ name: string }>()
+  const { name } = useParams({ from: '/$category/$name' })
 
   const [tag, setTag] = useState<string>('all')
 

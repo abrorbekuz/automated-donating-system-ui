@@ -24,7 +24,7 @@ import { Button } from 'src/components/ui/button'
 import { TransactionType } from 'src/types/transactionType'
 import useMediaQuery from 'src/hooks/use-media-query'
 import { format } from 'date-fns'
-import { NavLink } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 
 const TransactionCard: React.FC<{ node: TransactionType }> = ({ node }) => {
   const [open, setOpen] = React.useState(false)
@@ -85,9 +85,9 @@ const TransactionCard: React.FC<{ node: TransactionType }> = ({ node }) => {
               <strong>Server:</strong> {node.outputs}
             </div>
             {node.status !== 'done' && (
-              <NavLink to={node.paymentLink}>
+              <Link to={node.paymentLink}>
                 <Button>Pay</Button>
-              </NavLink>
+              </Link>
             )}
           </div>
         </div>
@@ -146,9 +146,9 @@ const TransactionCard: React.FC<{ node: TransactionType }> = ({ node }) => {
             </div>
 
             {node.status !== 'done' ? (
-              <NavLink to={node.paymentLink}>
+              <Link to={node.paymentLink}>
                 <Button className="w-full">Pay</Button>
-              </NavLink>
+              </Link>
             ) : (
               <div>
                 <strong>Status:</strong> ✅

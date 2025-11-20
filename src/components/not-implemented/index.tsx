@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
-import { Link, useRouteError } from 'react-router-dom'
+
+import { Link } from '@tanstack/react-router'
 import { Button } from '../ui/button'
 
-export default function NotImplemented() {
-  const error = useRouteError() as any
+export default function NotImplemented({ error }: { error: any }) {
   const { t } = useTranslation('notimplemeted')
 
   return (

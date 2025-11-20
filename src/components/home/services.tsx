@@ -1,14 +1,33 @@
 import React from 'react'
+import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+
 import { useCategory } from 'src/hooks/useCategory'
+
+function ServiceSkeleton() {
+  return (
+    <section>
+      <div className="my-6 h-8 w-64 animate-pulse rounded bg-gray-600" />
+
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-7 lg:grid-cols-9 xl:grid-cols-12">
+        {[...Array(12)].map((_, index) => (
+          <div key={index} className="mb-2 flex flex-col">
+            <div className="mb-2 aspect-square w-full animate-pulse rounded-lg bg-gray-600" />
+            <div className="mx-auto h-4 w-3/4 animate-pulse rounded bg-gray-600" />
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
 
 export function Services() {
   const { t } = useTranslation()
   const { loading, error, categories } = useCategory()
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error: {error.message}</div>
+  if (loading || error) {
+    return <ServiceSkeleton />
+  }
 
   return (
     <>

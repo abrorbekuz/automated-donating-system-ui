@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { useQuery } from '@apollo/client'
 import { ServicesResponse } from 'src/types/serviceKindType'
 import { GET_SERVICES } from 'src/api/queries/serviceQueries'
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 import { Badge } from '../ui/badge'
 
 const PAGE_SIZE = 16

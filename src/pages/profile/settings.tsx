@@ -1,8 +1,9 @@
-import { ChevronRightIcon, CopyIcon, HelpCircleIcon, MenuIcon, SettingsIcon, UserIcon, XIcon } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { ChevronRightIcon, CopyIcon, HelpCircleIcon, MenuIcon, SettingsIcon, UserIcon, XIcon } from 'lucide-react'
+
 import { Button } from 'src/components/ui/button'
 import { Card } from 'src/components/ui/card'
+import { Link } from '@tanstack/react-router'
 
 export default function Settings() {
   const [isMobile, setIsMobile] = useState(false)
@@ -30,7 +31,7 @@ export default function Settings() {
   const NavContent = () => (
     <>
       {navItems.map((item, index) => (
-        <NavLink key={index} to={item.link}>
+        <Link key={index} to={item.link}>
           <Button
             variant="ghost"
             className={`w-full justify-start px-4 py-6 text-lg hover:bg-secondary ${
@@ -40,7 +41,7 @@ export default function Settings() {
             <item.icon className="mr-2 h-4 w-4" />
             {item.label}
           </Button>
-        </NavLink>
+        </Link>
       ))}
     </>
   )

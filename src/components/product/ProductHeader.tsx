@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { ArrowLeftIcon, LucideShare2 } from 'lucide-react'
 import { ServiceType } from 'src/types/serviceKindType'
 import { useToast } from 'src/hooks/use-toast'
+import { Link } from '@tanstack/react-router'
 import { Button } from '../ui/button'
 
 interface ProductHeaderProps {
@@ -14,7 +14,7 @@ export const ProductHeader: React.FC<ProductHeaderProps> = ({ service }) => {
   return (
     <div className="flex items-center justify-between p-4 md:py-2">
       <div className="flex items-center gap-4">
-        <Link to={-1}>
+        <Link to="..">
           <ArrowLeftIcon />
         </Link>
         <Link

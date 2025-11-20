@@ -3,8 +3,8 @@ import { useQuery } from '@apollo/client'
 import { GET_PRODUCTS } from 'src/api/queries/productQueries'
 import { ProductsResponse } from 'src/types/productType'
 import { LoaderIcon } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 import { Badge } from '../ui/badge'
-import { Link } from 'react-router-dom'
 
 interface SearchBarResultsProps {
   query: string
@@ -13,6 +13,25 @@ interface SearchBarResultsProps {
 }
 
 const PAGE_SIZE = 16
+
+function SearchBarSkeleton() {
+  return (
+    <div className="h-auto flex-1 overflow-y-auto px-2">
+      {[...Array(8)].map((_, index) => (
+        <div key={index} className="mb-2 px-2">
+          <div className="flex items-start gap-4">
+            <div className="aspect-square h-24 w-24 animate-pulse rounded-sm bg-gray-600" />
+            <div className="flex h-24 flex-1 flex-col gap-1">
+              <div className="h-6 w-3/4 animate-pulse rounded bg-gray-600" />
+              <div className="h-6 w-32 animate-pulse rounded bg-gray-600" />
+              <div className="mt-auto h-5 w-40 animate-pulse rounded bg-gray-600" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
 
 function SearchBarResults({ query, slug, setOpen }: SearchBarResultsProps) {
   const { data, loading, error, fetchMore } = useQuery<ProductsResponse>(GET_PRODUCTS, {
@@ -42,11 +61,8 @@ function SearchBarResults({ query, slug, setOpen }: SearchBarResultsProps) {
           return {
             products: {
               ...previousResult.products,
-              edges: [
-                ...previousResult.products.edges,
-                ...fetchMoreResult.products.edges, // Append new data
-              ],
-              pageInfo: fetchMoreResult.products.pageInfo, // Update pageInfo with the latest cursor
+              edges: [...previousResult.products.edges, ...fetchMoreResult.products.edges],
+              pageInfo: fetchMoreResult.products.pageInfo,
             },
           }
         },
@@ -70,8 +86,7 @@ function SearchBarResults({ query, slug, setOpen }: SearchBarResultsProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
-  if (loading && !data) return <p>Loading...</p>
-  if (error) return <p>Error: {error.message}</p>
+  if ((loading && !data) || error) return <SearchBarSkeleton />
 
   return (
     <div className="h-auto flex-1 overflow-y-auto px-2">
@@ -97,7 +112,6 @@ function SearchBarResults({ query, slug, setOpen }: SearchBarResultsProps) {
         </Link>
       ))}
 
-      {/* Loader Icon for visual feedback */}
       {loading && isFetchingMore && (
         <section className="flex justify-center py-4">
           <LoaderIcon className="animate-spin text-gray-500" />

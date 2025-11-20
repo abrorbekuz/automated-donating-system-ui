@@ -24,7 +24,7 @@ and this was my code back in the 2022
 - [tailwindcss](https://tailwindcss.com/)
 - [less](http://lesscss.org/)
 - [postcss](https://postcss.org/)
-- [react-router-dom](https://reactrouter.com/en/6.16.0)
+- [tanstack-router](https://reactrouter.com/en/6.16.0)
 - [eslint](https://eslint.org/)/[stylelint](https://stylelint.io/)
 - [prettier](https://prettier.io/)
 - [svgr](https://react-svgr.com/)

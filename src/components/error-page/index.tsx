@@ -1,9 +1,8 @@
+import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { Link, useRouteError } from 'react-router-dom'
 import { Button } from '../ui/button'
 
-export default function ErrorPage() {
-  const error = useRouteError() as any
+export function ErrorPage({ error }: { error: any }) {
   const { t } = useTranslation('notfound')
 
   return (

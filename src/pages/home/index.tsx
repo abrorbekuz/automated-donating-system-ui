@@ -5,20 +5,24 @@ import Autoplay from 'embla-carousel-autoplay'
 import { Services } from 'src/components/home/services'
 import { TopItems } from 'src/components/home/topItems'
 import { HomeFooter } from 'src/components/home/homeFooter'
-import { Card, CardContent } from 'src/components/ui/card'
+import useMediaQuery from 'src/hooks/use-media-query'
+import { Header } from 'src/components/header'
 
 export default function Home() {
   const { t } = useTranslation('translation')
+  const isDesktop = useMediaQuery('(min-width: 768px)')
 
   return (
     <>
+      {!isDesktop && <Header />}
+
       <main className="container mx-auto mb-8 space-y-4">
         <Helmet>
           <title>Unlimited Possibility</title>
         </Helmet>
 
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="col-span-3 mt-4 lg:col-span-2">
+          <div className="mt-42 col-span-3">
             <Carousel
               opts={{
                 align: 'start',
@@ -48,14 +52,13 @@ export default function Home() {
               </CarouselContent>
             </Carousel>
           </div>
-          <Card className="mt-5 hidden lg:block">
+          {/* <Card className="mt-5 hidden lg:block">
             <CardContent>hhi</CardContent>
-          </Card>
+          </Card> */}
         </div>
         <Services />
         <TopItems />
       </main>
-
       <HomeFooter />
     </>
   )

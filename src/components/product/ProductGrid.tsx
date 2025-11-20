@@ -4,9 +4,10 @@ import { Badge } from 'src/components/ui/badge'
 import regroupProductsByTag, { getTag } from 'src/lib/products'
 import { ProductType } from 'src/types/productType'
 import { ServiceType } from 'src/types/serviceKindType'
-import { useLocation } from 'react-router-dom'
-import { Separator } from '../ui/separator'
 import { useTranslation } from 'react-i18next'
+
+import { useLocation } from '@tanstack/react-router'
+import { Separator } from '../ui/separator'
 
 interface ProductGridProps {
   service: ServiceType | undefined

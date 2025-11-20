@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client'
 import { LoaderIcon } from 'lucide-react'
 import { GET_SERVICE_MAINS } from 'src/api/queries/serviceMainQueries'
 import { ServiceMainsResponse } from 'src/types/serviceKindType'
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 
 interface SellProductProps {
   query: string
@@ -12,16 +12,28 @@ interface SellProductProps {
 
 const PAGE_SIZE = 16
 
+function SellResultsSkeleton() {
+  return (
+    <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-7 lg:grid-cols-9 xl:grid-cols-12">
+      {[...Array(12)].map((_, index) => (
+        <div key={index} className="mb-2 flex flex-col">
+          <div className="mb-2 aspect-square w-full animate-pulse rounded-lg bg-gray-600/40" />
+          <div className="h-5 w-full animate-pulse rounded bg-gray-600/40" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 const SellResults = ({ query, category }: SellProductProps) => {
   const { data, loading, error, fetchMore } = useQuery<ServiceMainsResponse>(GET_SERVICE_MAINS, {
     variables: { first: PAGE_SIZE, title: query, category: category, after: null },
-    fetchPolicy: 'cache-and-network', // Fetch data from cache first, then from the server if not available in cache
+    fetchPolicy: 'cache-and-network',
     notifyOnNetworkStatusChange: true,
   })
 
   const [isFetchingMore, setIsFetchingMore] = useState(false)
 
-  // Trigger fetching more when the user scrolls to the bottom
   const handleScroll = () => {
     if (isFetchingMore || !data || !data.serviceTypes.pageInfo.hasNextPage) return
 
@@ -39,15 +51,22 @@ const SellResults = ({ query, category }: SellProductProps) => {
     }
   }
 
-  // Attach scroll listener on component mount
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll) // Cleanup
+    return () => window.removeEventListener('scroll', handleScroll)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isFetchingMore])
 
-  if (loading && !data) return <p>Loading...</p>
-  if (error) return <p>Error: {error.message}</p>
+  if ((loading && !data) || error)
+    return (
+      <>
+        <SellResultsSkeleton />
+        <SellResultsSkeleton />
+        <SellResultsSkeleton />
+        <SellResultsSkeleton />
+        <SellResultsSkeleton />
+      </>
+    )
 
   return (
     <>

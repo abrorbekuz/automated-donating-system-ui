@@ -1,6 +1,6 @@
 import React from 'react'
-import { ChipGroup, ChipItem } from '../Chips'
 import { useCategory } from 'src/hooks/useCategory'
+import { ChipGroup, ChipItem } from '../Chips'
 
 interface SearchBarChipsProps {
   slug: string

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Separator } from './ui/separator'
 import { ProductType } from 'src/types/productType'
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
+import { Separator } from './ui/separator'
 import { Card } from './ui/card'
 
 interface ChequeProps {

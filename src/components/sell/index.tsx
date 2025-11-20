@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react'
-import { Input } from '../ui/input'
 import { SearchIcon, XIcon } from 'lucide-react'
+import { debounce } from 'lodash'
+import { Link } from '@tanstack/react-router'
+import { Input } from '../ui/input'
 import SellChips from './sellchips'
 import SellResults from './sellresults'
-import { debounce } from 'lodash'
-import { NavLink } from 'react-router-dom'
 
 const SellProduct = () => {
   const [query, setQuery] = React.useState<string>('')
@@ -29,9 +29,9 @@ const SellProduct = () => {
     <main className="mx-auto space-y-4 p-4 md:container md:px-4">
       <nav className="flex items-center justify-between bg-background">
         <div className="text text-lg font-medium capitalize">choose service</div>
-        <NavLink to={-1}>
+        <Link to="/home">
           <XIcon className="md:hidden" />
-        </NavLink>
+        </Link>
       </nav>
       <div className="flex flex-col gap-4">
         <div className="relative max-w-[768px]">

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { ServicesResponse } from 'src/types/serviceKindType'
 import { GET_SERVICES } from 'src/api/queries/serviceQueries'
-import { Link, NavLink } from 'react-router-dom'
+
 import { Badge } from 'src/components/ui/badge'
 import { Button } from 'src/components/ui/button'
 import { Card } from 'src/components/ui/card'
 import { Loader2Icon } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 
 const PAGE_SIZE = 16
 
@@ -15,9 +16,9 @@ const EmptyState = () => (
     <div className="flex flex-col items-center gap-1 py-8 text-center">
       <h3 className="font-bold tracking-tight md:text-2xl">You have no products</h3>
       <p className="text-sm text-muted-foreground">You can start selling as soon as you add a product.</p>
-      <NavLink to={'/sell'}>
+      <Link to={'/sell'}>
         <Button className="mt-4">Add Product</Button>
-      </NavLink>
+      </Link>
     </div>
   </div>
 )

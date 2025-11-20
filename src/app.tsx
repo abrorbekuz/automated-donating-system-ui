@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { RouterProvider } from 'react-router-dom'
-import { createRouter } from './router'
-import { ThemeProvider } from './components/themeprovider'
+// import { RouterProvider } from 'react-router-dom'
+// import { createRouter } from './router'
+
 import { ApolloProvider } from '@apollo/client'
+import { RouterProvider } from '@tanstack/react-router'
+
+import { ThemeProvider } from './components/themeprovider'
 import client from './api/graphqlClient'
 import { MeProvider } from './hooks/MeContext'
 import SplashScreen from './components/Splash'
 import { Toaster } from './components/ui/toaster'
 import { PortalProvider } from './components/portal'
+
+import { router } from './router'
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -49,7 +54,8 @@ export default function App() {
                 waterLevel={progress}
               />
             ) : (
-              <RouterProvider router={createRouter()} />
+              // <RouterProvider router={createRouter()} />
+              <RouterProvider router={router} />
             )}
             <Toaster />
           </MeProvider>

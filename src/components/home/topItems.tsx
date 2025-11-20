@@ -2,10 +2,40 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { useQuery } from '@apollo/client'
 import { ServicesResponse } from 'src/types/serviceKindType'
 import { GET_SERVICES } from 'src/api/queries/serviceQueries'
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 import { Badge } from '../ui/badge'
 
 const PAGE_SIZE = 16
+
+function TopItemsSkeleton() {
+  return (
+    <section>
+      <div className="my-6 h-8 w-64 animate-pulse rounded bg-gray-600" />
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {[...Array(8)].map((_, index) => (
+          <div key={index} className="flex flex-col gap-2">
+            {/* Service Type Header Skeleton */}
+            <div className="flex gap-2">
+              <div className="aspect-square h-12 w-12 animate-pulse rounded-sm bg-gray-600 lg:h-10 lg:w-10" />
+              <div className="flex flex-1 flex-col justify-between">
+                <div className="h-5 w-32 animate-pulse rounded bg-gray-600" />
+                <div className="h-4 w-20 animate-pulse rounded bg-gray-600" />
+              </div>
+            </div>
+
+            {/* Product Card Skeleton */}
+            <div className="mb-2 flex h-full flex-col justify-between">
+              <div className="mb-2 aspect-video w-full animate-pulse rounded-lg bg-gray-600" />
+              <div className="mb-2 h-6 w-24 animate-pulse rounded bg-gray-600" />
+              <div className="h-5 w-full animate-pulse rounded bg-gray-600" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
 
 const TopItems: React.FC = () => {
   const { data, loading, error, fetchMore } = useQuery<ServicesResponse>(GET_SERVICES, {
@@ -56,8 +86,13 @@ const TopItems: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
-  if (loading && !data) return <p>Loading...</p>
-  if (error) return <p>Error: {error.message}</p>
+  if ((loading && !data) || error)
+    return (
+      <>
+        <TopItemsSkeleton />
+        <TopItemsSkeleton />
+      </>
+    )
 
   return (
     <>

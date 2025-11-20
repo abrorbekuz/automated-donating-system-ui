@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext, useMemo } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
 import { cn } from 'src/lib/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { useNavigate, useSearch } from '@tanstack/react-router'
 
 // Define variant styling using cva
 const chipItemVariants = cva(
@@ -45,24 +45,26 @@ const ChipGroup: React.FC<{
   className?: string
   listenToTag?: string
   default?: string
-  onTagChange?: (newTag: string) => void // Add the onTagChange prop
-}> = ({
-  className,
-  children,
-  listenToTag,
-  default: defaultTag = 'all',
-  onTagChange, // Destructure the onTagChange prop
-}) => {
+  onTagChange?: (newTag: string) => void
+}> = ({ className, children, listenToTag = 'tag', default: defaultTag = 'all', onTagChange }) => {
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
 
-  const [tag, setTag] = useState<string | null>(searchParams.get(listenToTag || 'tag') || defaultTag)
+  // ✅ FIXED: useSearch returns the search params object directly
+  const searchParams = useSearch({ from: '' })
+
+  // ✅ FIXED: Access the property directly, not with .get()
+  const [tag, setTag] = useState(searchParams[listenToTag] || defaultTag)
 
   const handleOrderChange = (newTag: string) => {
     setTag(newTag)
-    searchParams.set(listenToTag || 'tag', newTag) // Update the search parameter based on listenToTag
-    setSearchParams(searchParams)
-    navigate({ pathname: window.location.pathname, search: searchParams.toString() }) // Update navigation
+
+    // ✅ FIXED: Pass an object to navigate with the updated search params
+    navigate({
+      search: {
+        ...searchParams,
+        [listenToTag]: newTag,
+      },
+    })
 
     // Call the onTagChange callback if provided
     if (onTagChange) {
@@ -71,14 +73,11 @@ const ChipGroup: React.FC<{
   }
 
   // Memoize context value to prevent unnecessary renders
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const providerValue = useMemo(() => ({ tag, setTag: handleOrderChange }), [tag])
+  const providerValue = useMemo(() => ({ tag: tag || defaultTag, setTag: handleOrderChange }), [tag, defaultTag])
 
   return (
     <ChipContext.Provider value={providerValue}>
-      <div className={cn('no-scrollbar flex select-none flex-wrap overflow-x-auto', className)}>
-        <div className="flex space-x-2">{children}</div>
-      </div>
+      <div className={cn('flex flex-wrap gap-2', className)}>{children}</div>
     </ChipContext.Provider>
   )
 }
@@ -86,7 +85,7 @@ const ChipGroup: React.FC<{
 // ChipItem component (accepts any dynamic props)
 export interface ChipItemProps extends React.HTMLAttributes<HTMLButtonElement>, VariantProps<typeof chipItemVariants> {
   value: string
-  isActivex?: boolean // Add the isActive prop to indicate whether the chip is currently active
+  isActivex?: boolean
 }
 
 const ChipItem: React.FC<ChipItemProps> = ({ value, variant, size, className, isActivex, ...props }) => {
@@ -95,13 +94,7 @@ const ChipItem: React.FC<ChipItemProps> = ({ value, variant, size, className, is
 
   return (
     <button
-      className={cn(
-        chipItemVariants({
-          variant: isActive ? 'default' : variant || 'secondary',
-          size,
-        }),
-        className,
-      )}
+      className={cn(chipItemVariants({ variant, size }), isActive && 'ring-2 ring-offset-2', className)}
       onClick={() => setTag(value)}
       {...props}
     >

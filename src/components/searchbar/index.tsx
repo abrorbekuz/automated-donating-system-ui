@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect } from 'react'
 import { SearchIcon } from 'lucide-react'
+import { debounce } from 'lodash'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import SearchBarChips from './serchbarchips'
 import SearchBarResults from './searchbarresults'
-import { debounce } from 'lodash'
 
 export function SearchBar({ iconOnly }: { iconOnly?: boolean }) {
   const [open, setOpen] = React.useState(false)

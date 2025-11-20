@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useParams } from 'react-router-dom'
 import { useService } from 'src/hooks/useService'
 import { ProductType } from 'src/types/productType'
 
@@ -11,6 +10,7 @@ import { ProductDescription } from 'src/components/product/ProductDescription'
 import { ProductCart } from 'src/components/product/ProductCart'
 import ProductCarousel from 'src/components/product/ProductCarousel'
 import { ServiceItems } from 'src/components/home/serviceItems'
+import { useLocation, useParams } from '@tanstack/react-router'
 
 export default function Product() {
   const { t } = useTranslation('translation')

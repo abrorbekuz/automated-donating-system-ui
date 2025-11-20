@@ -1,6 +1,6 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'src/components/ui/select'
-import { useEffect } from 'react'
 
 export default function LanguageSelector() {
   const { t, i18n } = useTranslation()

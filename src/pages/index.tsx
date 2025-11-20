@@ -12,7 +12,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'src/components/ui/card'
 import { Search, Repeat, ShieldCheck, YoutubeIcon, SendIcon, RefreshCcwIcon, ClockIcon } from 'lucide-react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from 'src/components/ui/accordion'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 
 function MainPage() {
   const categories = ['Games', 'Mobile Games', 'Apps']
@@ -98,12 +98,12 @@ function MainPage() {
                   className="rounded-r-none"
                   onChange={handleChange}
                 />
-                <NavLink to="/home">
+                <Link to="/home">
                   <Button type="button" className="rounded-l-none">
                     <Search className="mr-2 h-4 w-4" />
                     Search
                   </Button>
-                </NavLink>
+                </Link>
               </div>
             </div>
 
